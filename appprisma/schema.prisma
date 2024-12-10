@@ -1,40 +1,26 @@
-import { NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
-
-export async function POST(request: Request) {
-  try {
-    const data = await request.json()
-    const report = await prisma.report.create({
-      data: {
-        ...data,
-        date: new Date(data.date),
-        submitTime: new Date(data.submitTime)
-      }
-    })
-    return NextResponse.json(report)
-  } catch (error) {
-    console.error('Error:', error)
-    return NextResponse.json(
-      { error: 'Failed to create report' },
-      { status: 500 }
-    )
-  }
+generator client {
+  provider = "prisma-client-js"
 }
 
-export async function GET() {
-  try {
-    const reports = await prisma.report.findMany({
-      orderBy: {
-        submitTime: 'desc'
-      }
-    })
-    return NextResponse.json(reports)
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to fetch reports' },
-      { status: 500 }
-    )
-  }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Report {
+  id           String   @id @default(cuid())
+  date         DateTime
+  name         String
+  workload     String
+  stress       String
+  motivation   String
+  tasks        String   @db.Text
+  achievements String   @db.Text
+  problems     String   @db.Text
+  improvements String   @db.Text
+  learning     String   @db.Text
+  tomorrow     String   @db.Text
+  comments     String?  @db.Text
+  submitTime   DateTime
+  createdAt    DateTime @default(now())
 }
