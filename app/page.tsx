@@ -37,3 +37,7 @@ function TextAreaField({
 }: TextAreaFieldProps) {
   // ... 既存のコード ...
 }
+// ファイルの最後にデフォルトエクスポートがあるか確認
+export default function DailyReportForm() {
+  // ...既存のコード...
+}
