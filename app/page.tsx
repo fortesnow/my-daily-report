@@ -192,3 +192,6 @@ export default function DailyReportForm() {
           </Button>
         </form>
       </div>
+    </div>
+  )
+}
