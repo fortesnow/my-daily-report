@@ -175,3 +175,43 @@ function TextAreaField({ id, label, placeholder, icon }) {
   )
 }
 
+// 型定義を追加
+interface ScaleQuestionProps {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  icon: React.ReactNode;
+  lowLabel: string;
+  midLabel: string;
+  highLabel: string;
+}
+
+// コンポーネントに型を追加
+function ScaleQuestion({ 
+  label, 
+  value, 
+  onChange, 
+  icon, 
+  lowLabel, 
+  midLabel, 
+  highLabel 
+}: ScaleQuestionProps) {
+  // ... 既存のコード ...
+}
+
+// TextAreaFieldの型も追加
+interface TextAreaFieldProps {
+  id: string;
+  label: string;
+  placeholder: string;
+  icon: React.ReactNode;
+}
+
+function TextAreaField({ 
+  id, 
+  label, 
+  placeholder, 
+  icon 
+}: TextAreaFieldProps) {
+  // ... 既存のコード ...
+}
