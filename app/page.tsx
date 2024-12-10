@@ -6,7 +6,17 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Calendar, Smile, Battery, Zap, CheckCircle, XCircle, Lightbulb, CalendarIcon, MessageCircle } from 'lucide-react'
+import { 
+  FaCalendar, 
+  FaSmile, 
+  FaBatteryHalf, 
+  FaBolt, 
+  FaCheckCircle, 
+  FaTimesCircle, 
+  FaLightbulb, 
+  FaComments,
+  FaCalendarDay
+} from 'react-icons/fa'
 
 const ScaleQuestion = ({ label, value, onChange, icon, lowLabel, midLabel, highLabel }: {
   label: string;
@@ -79,10 +89,8 @@ export default function DailyReportForm() {
     setIsSubmitted(true)
     setSubmitTime(new Date().toLocaleString())
     
-    // フォーム要素の型を定義
     const form = event.currentTarget as HTMLFormElement
     
-    // フォームデータの作成
     const formData = {
       date: (form.elements.namedItem('date') as HTMLInputElement).value,
       name: (form.elements.namedItem('name') as HTMLInputElement).value,
@@ -127,7 +135,7 @@ export default function DailyReportForm() {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <Label htmlFor="date" className="text-lg font-semibold text-gray-700 flex items-center">
-                <Calendar className="w-6 h-6 text-gray-500 mr-2" />
+                <FaCalendar className="w-5 h-5 text-gray-500 mr-2" />
                 日付
               </Label>
               <Input
@@ -139,7 +147,7 @@ export default function DailyReportForm() {
             </div>
             <div className="flex-1">
               <Label htmlFor="name" className="text-lg font-semibold text-gray-700 flex items-center">
-                <Smile className="w-6 h-6 text-gray-500 mr-2" />
+                <FaSmile className="w-5 h-5 text-gray-500 mr-2" />
                 名前
               </Label>
               <Input
@@ -156,7 +164,7 @@ export default function DailyReportForm() {
               label="業務量"
               value={workload}
               onChange={setWorkload}
-              icon={<Battery className="w-6 h-6 text-blue-500" />}
+              icon={<FaBatteryHalf className="w-5 h-5 text-blue-500" />}
               lowLabel="少ない"
               midLabel="普通"
               highLabel="多い"
@@ -166,7 +174,7 @@ export default function DailyReportForm() {
               label="ストレス"
               value={stress}
               onChange={setStress}
-              icon={<Zap className="w-6 h-6 text-yellow-500" />}
+              icon={<FaBolt className="w-5 h-5 text-yellow-500" />}
               lowLabel="低い"
               midLabel="普通"
               highLabel="高い"
@@ -176,7 +184,7 @@ export default function DailyReportForm() {
               label="モチベーション"
               value={motivation}
               onChange={setMotivation}
-              icon={<Smile className="w-6 h-6 text-green-500" />}
+              icon={<FaSmile className="w-5 h-5 text-green-500" />}
               lowLabel="低い"
               midLabel="普通"
               highLabel="高い"
@@ -187,49 +195,49 @@ export default function DailyReportForm() {
             id="tasks"
             label="本日の主な業務内容"
             placeholder="1. プロジェクトAのミーティング&#10;2. 報告書の作成&#10;3. 新規顧客との商談"
-            icon={<CheckCircle className="w-6 h-6 text-blue-500" />}
+            icon={<FaCheckCircle className="w-5 h-5 text-blue-500" />}
           />
 
           <TextAreaField
             id="achievements"
             label="本日の成果"
             placeholder="プロジェクトAの進捗を20%から35%まで上げることができた"
-            icon={<CheckCircle className="w-6 h-6 text-green-500" />}
+            icon={<FaCheckCircle className="w-5 h-5 text-green-500" />}
           />
 
           <TextAreaField
             id="problems"
             label="問題点"
             placeholder="1. タスクBの納期が厳しい&#10;2. 新しいツールの使い方に慣れていない"
-            icon={<XCircle className="w-6 h-6 text-red-500" />}
+            icon={<FaTimesCircle className="w-5 h-5 text-red-500" />}
           />
 
           <TextAreaField
             id="improvements"
             label="改善点・対策"
             placeholder="1. タスクBの優先順位を上げ、チームで協力して取り組む&#10;2. 新しいツールのオンライン講座を受講する"
-            icon={<Lightbulb className="w-6 h-6 text-yellow-500" />}
+            icon={<FaLightbulb className="w-5 h-5 text-yellow-500" />}
           />
 
           <TextAreaField
             id="learning"
             label="本日の学び"
             placeholder="新しい顧客対応テクニックを学んだ"
-            icon={<Lightbulb className="w-6 h-6 text-purple-500" />}
+            icon={<FaLightbulb className="w-5 h-5 text-purple-500" />}
           />
 
           <TextAreaField
             id="tomorrow"
             label="明日の予定"
             placeholder="1. プロジェクトBのキックオフミーティング&#10;2. 報告書の提出&#10;3. オンライン研修の受講"
-            icon={<CalendarIcon className="w-6 h-6 text-indigo-500" />}
+            icon={<FaCalendarDay className="w-5 h-5 text-indigo-500" />}
           />
 
           <TextAreaField
             id="comments"
             label="その他コメント"
             placeholder="特になし"
-            icon={<MessageCircle className="w-6 h-6 text-gray-500" />}
+            icon={<FaComments className="w-5 h-5 text-gray-500" />}
           />
 
           <Button 
