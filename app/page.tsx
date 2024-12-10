@@ -71,13 +71,53 @@ const TextAreaField = ({ id, label, placeholder, icon }: {
 
 // メインコンポーネント
 export default function DailyReportForm() {
+  // 状態管理
   const [workload, setWorkload] = useState("3")
   const [stress, setStress] = useState("3")
   const [motivation, setMotivation] = useState("3")
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitTime, setSubmitTime] = useState<string>("")
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  // フォーム送信処理
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log("フォームが送信されました")
+    setIsSubmitted(true)
+    setSubmitTime(new Date().toLocaleString())
+    
+    // フォームデータの作成
+    const formData = {
+      date: event.currentTarget.date.value,
+      name: event.currentTarget.name.value,
+      workload,
+      stress,
+      motivation,
+      tasks: event.currentTarget.tasks.value,
+      achievements: event.currentTarget.achievements.value,
+      problems: event.currentTarget.problems.value,
+      improvements: event.currentTarget.improvements.value,
+      learning: event.currentTarget.learning.value,
+      tomorrow: event.currentTarget.tomorrow.value,
+      comments: event.currentTarget.comments.value,
+      submitTime: new Date().toISOString()
+    }
+
+    // APIエンドポイントにデータを送信
+    try {
+      const response = await fetch('/api/reports', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+      
+      if (response.ok) {
+        alert('日報が提出されました')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('提出に失敗しました')
+    }
   }
 
   return (
@@ -85,6 +125,11 @@ export default function DailyReportForm() {
       <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
         <div className="bg-gradient-to-r from-blue-500 to-purple-600 py-6 px-8">
           <h1 className="text-3xl font-extrabold text-white text-center">日報</h1>
+          {isSubmitted && (
+            <p className="text-white text-center mt-2">
+              提出済み: {submitTime}
+            </p>
+          )}
         </div>
         
         <form className="space-y-8 p-8" onSubmit={handleSubmit}>
@@ -187,8 +232,12 @@ export default function DailyReportForm() {
             icon={<MessageCircle className="w-6 h-6 text-gray-500" />}
           />
 
-          <Button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 rounded-full shadow-lg hover:from-blue-600 hover:to-indigo-700 transition duration-300">
-            提出
+          <Button 
+            type="submit" 
+            className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 rounded-full shadow-lg hover:from-blue-600 hover:to-indigo-700 transition duration-300"
+            disabled={isSubmitted}
+          >
+            {isSubmitted ? '提出済み' : '提出'}
           </Button>
         </form>
       </div>
