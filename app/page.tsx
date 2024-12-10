@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Calendar, Smile, Battery, Zap, CheckCircle, XCircle, Lightbulb, CalendarIcon, MessageCircle } from 'lucide-react'
 
-// ScaleQuestionコンポーネント
 const ScaleQuestion = ({ label, value, onChange, icon, lowLabel, midLabel, highLabel }: {
   label: string;
   value: string;
@@ -46,7 +45,6 @@ const ScaleQuestion = ({ label, value, onChange, icon, lowLabel, midLabel, highL
   )
 }
 
-// TextAreaFieldコンポーネント
 const TextAreaField = ({ id, label, placeholder, icon }: {
   id: string;
   label: string;
@@ -69,16 +67,13 @@ const TextAreaField = ({ id, label, placeholder, icon }: {
   )
 }
 
-// メインコンポーネント
 export default function DailyReportForm() {
-  // 状態管理
   const [workload, setWorkload] = useState("3")
   const [stress, setStress] = useState("3")
   const [motivation, setMotivation] = useState("3")
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const [submitTime, setSubmitTime] = useState<string>("")
+  const [submitTime, setSubmitTime] = useState<string | null>(null)
 
-  // フォーム送信処理
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setIsSubmitted(true)
@@ -115,60 +110,63 @@ export default function DailyReportForm() {
       
       if (response.ok) {
         alert('日報が提出されました')
+      } else {
+        throw new Error('Failed to submit report')
       }
     } catch (error) {
       console.error('Error:', error)
       alert('提出に失敗しました')
+      setIsSubmitted(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-200 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-500 to-purple-600 py-6 px-8">
-          <h1 className="text-3xl font-extrabold text-white text-center">日報</h1>
-          {isSubmitted && (
-            <p className="text-white text-center mt-2">
-              提出済み: {submitTime}
-            </p>
-          )}
-        </div>
-        
-        <form className="space-y-8 p-8" onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="relative">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
               <Label htmlFor="date" className="text-lg font-semibold text-gray-700 flex items-center">
-                <Calendar className="w-5 h-5 mr-2 text-blue-500" />
+                <Calendar className="w-6 h-6 text-gray-500 mr-2" />
                 日付
               </Label>
-              <Input type="date" id="date" required className="mt-1 block w-full border-2 border-blue-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <Input
+                type="date"
+                id="date"
+                required
+                className="mt-1 block w-full border-2 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
             </div>
-
-            <div className="relative">
+            <div className="flex-1">
               <Label htmlFor="name" className="text-lg font-semibold text-gray-700 flex items-center">
-                <Smile className="w-5 h-5 mr-2 text-green-500" />
-                氏名
+                <Smile className="w-6 h-6 text-gray-500 mr-2" />
+                名前
               </Label>
-              <Input type="text" id="name" placeholder="山田 太郎" required className="mt-1 block w-full border-2 border-green-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <Input
+                type="text"
+                id="name"
+                required
+                className="mt-1 block w-full border-2 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="grid gap-6">
             <ScaleQuestion
-              label="現在の業務量"
+              label="業務量"
               value={workload}
               onChange={setWorkload}
-              icon={<Battery className="w-6 h-6 text-yellow-500" />}
-              lowLabel="余裕がある"
-              midLabel="ちょうど良い"
-              highLabel="かなり忙しい"
+              icon={<Battery className="w-6 h-6 text-blue-500" />}
+              lowLabel="少ない"
+              midLabel="普通"
+              highLabel="多い"
             />
 
             <ScaleQuestion
-              label="ストレスレベル"
+              label="ストレス"
               value={stress}
               onChange={setStress}
-              icon={<Zap className="w-6 h-6 text-red-500" />}
+              icon={<Zap className="w-6 h-6 text-yellow-500" />}
               lowLabel="低い"
               midLabel="普通"
               highLabel="高い"
