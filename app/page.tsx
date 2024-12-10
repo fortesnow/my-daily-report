@@ -84,24 +84,26 @@ export default function DailyReportForm() {
     setIsSubmitted(true)
     setSubmitTime(new Date().toLocaleString())
     
+    // フォーム要素の型を定義
+    const form = event.currentTarget as HTMLFormElement
+    
     // フォームデータの作成
     const formData = {
-      date: event.currentTarget.date.value,
-      name: event.currentTarget.name.value,
+      date: (form.elements.namedItem('date') as HTMLInputElement).value,
+      name: (form.elements.namedItem('name') as HTMLInputElement).value,
       workload,
       stress,
       motivation,
-      tasks: event.currentTarget.tasks.value,
-      achievements: event.currentTarget.achievements.value,
-      problems: event.currentTarget.problems.value,
-      improvements: event.currentTarget.improvements.value,
-      learning: event.currentTarget.learning.value,
-      tomorrow: event.currentTarget.tomorrow.value,
-      comments: event.currentTarget.comments.value,
+      tasks: (form.elements.namedItem('tasks') as HTMLTextAreaElement).value,
+      achievements: (form.elements.namedItem('achievements') as HTMLTextAreaElement).value,
+      problems: (form.elements.namedItem('problems') as HTMLTextAreaElement).value,
+      improvements: (form.elements.namedItem('improvements') as HTMLTextAreaElement).value,
+      learning: (form.elements.namedItem('learning') as HTMLTextAreaElement).value,
+      tomorrow: (form.elements.namedItem('tomorrow') as HTMLTextAreaElement).value,
+      comments: (form.elements.namedItem('comments') as HTMLTextAreaElement).value,
       submitTime: new Date().toISOString()
     }
 
-    // APIエンドポイントにデータを送信
     try {
       const response = await fetch('/api/reports', {
         method: 'POST',
