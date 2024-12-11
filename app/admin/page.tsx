@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
@@ -43,6 +43,14 @@ export default function AdminPage() {
         setReports(data)
         setFilteredReports(data)
       } catch (err) {
-        setError
+        setError(err instanceof Error ? err.message : 'An error occurred')  // ここを修正
+      } finally {
+        setLoading(false)  // これを追加
       }
-      
+    }
+    
+    fetchReports()
+  }, [])
+
+  // ... 残りのコード
+}
