@@ -43,14 +43,34 @@ export default function AdminPage() {
         setReports(data)
         setFilteredReports(data)
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred')  // ここを修正
+        setError(err instanceof Error ? err.message : 'An error occurred')
       } finally {
-        setLoading(false)  // これを追加
+        setLoading(false)
       }
     }
     
     fetchReports()
   }, [])
 
-  // ... 残りのコード
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : (
+        <div>
+          <h1>Reports</h1>
+          {/* レポートのリストを表示 */}
+          {filteredReports.map(report => (
+            <div key={report.id}>
+              <h2>{report.name}</h2>
+              <p>{report.date}</p>
+              {/* 他のフィールドも表示 */}
+            </div>
+          ))}
+        </div>
+      )}
+    </main>
+  )
 }
