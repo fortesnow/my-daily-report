@@ -61,7 +61,6 @@ export default function AdminPage() {
       ) : (
         <div>
           <h1>Reports</h1>
-          {/* レポートのリストを表示 */}
           {filteredReports.map(report => (
             <div key={report.id}>
               <h2>{report.name}</h2>
