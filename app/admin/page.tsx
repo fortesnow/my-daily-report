@@ -43,7 +43,7 @@ export default function AdminPage() {
         setReports(data)
         setFilteredReports(data)
       } catch (err) {
-      }setError(err instanceof Error ? err.message : 'An error occurred')
+        setError(err instanceof Error ? err.message : 'An error occurred')
       } finally {
         setLoading(false)
       }
@@ -51,7 +51,7 @@ export default function AdminPage() {
     
     fetchReports()
   }, [])
-}
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       {loading ? (
