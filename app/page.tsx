@@ -21,19 +21,15 @@ type FormData = {
 }
 
 const ScaleQuestion = ({ label, value, onChange }: { label: string; value: string; onChange: (value: string) => void }) => (
-  <div className="space-y-2">
-    <Label>{label}</Label>
-    <RadioGroup value={value} onValueChange={onChange} className="flex justify-between">
+  <div className="space-y-4">
+    <Label className="text-base font-medium">{label}</Label>
+    <RadioGroup value={value} onValueChange={onChange} className="flex gap-4 justify-center">
       {[1, 2, 3, 4, 5].map((val) => (
-        <div key={val} className="flex flex-col items-center">
-          <RadioGroupItem 
-            value={val.toString()} 
-            id={`${label}-${val}`} 
-            className="peer sr-only" 
-          />
+        <div key={val} className="flex items-center">
+          <RadioGroupItem value={val.toString()} id={`${label}-${val}`} className="peer hidden" />
           <Label
             htmlFor={`${label}-${val}`}
-            className="flex flex-col items-center justify-center w-12 h-12 text-xs font-medium text-gray-700 bg-white border-2 border-gray-200 rounded-full cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white peer-checked:border-blue-600 hover:bg-gray-50"
+            className="w-14 h-14 flex items-center justify-center text-sm border-2 rounded-full cursor-pointer transition-all peer-checked:bg-blue-500 peer-checked:text-white peer-checked:border-blue-600 hover:bg-gray-50"
           >
             {val}
           </Label>
@@ -44,12 +40,13 @@ const ScaleQuestion = ({ label, value, onChange }: { label: string; value: strin
 )
 
 const TextQuestion = ({ label, value, onChange }: { label: string; value: string; onChange: (value: string) => void }) => (
-  <div className="space-y-2">
-    <Label>{label}</Label>
+  <div className="space-y-3">
+    <Label className="text-base font-medium">{label}</Label>
     <Textarea 
       value={value} 
       onChange={(e) => onChange(e.target.value)}
-      className="min-h-[100px] resize-none"
+      className="min-h-[120px] resize-none rounded-lg border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+      placeholder={`${label}を入力してください`}
     />
   </div>
 )
@@ -86,7 +83,6 @@ export default function Home() {
       if (!response.ok) {
         throw new Error('Failed to submit report')
       }
-      // Reset form
       setFormData({
         name: '',
         workload: '3',
@@ -106,18 +102,19 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-8">日報入力フォーム</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12 px-4">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-8">
+        <h1 className="text-3xl font-bold text-gray-900 text-center">日報入力フォーム</h1>
         
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <Label>名前</Label>
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="space-y-3">
+            <Label className="text-base font-medium">名前</Label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-3 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+              placeholder="名前を入力してください"
               required
             />
           </div>
@@ -174,8 +171,8 @@ export default function Home() {
             onChange={(value) => setFormData({...formData, comments: value})}
           />
 
-          <Button type="submit" className="w-full">
-            送信
+          <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg transition-colors">
+            送信する
           </Button>
         </form>
       </div>
