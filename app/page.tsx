@@ -140,7 +140,7 @@ export default function Home() {
       >
         <div className="bg-gradient-to-r from-blue-500 to-purple-600 py-6 px-8">
           <h1 className="text-3xl font-extrabold text-white text-center">Daily Sparkle ✨</h1>
-          <p className="text-blue-100 text-center mt-2">あなたの1日をキラキラ記録しよう！</p>
+          <p className="text-blue-100 text-center mt-2">お疲れさまでした。1日を記録しよう！</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8 p-8">
@@ -265,7 +265,7 @@ export default function Home() {
               className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-3 rounded-full shadow-lg hover:from-pink-600 hover:to-purple-700 transition duration-300"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'キラキラ送信中...' : 'キラキラ提出 ✨'}
+              {isSubmitting ? '送信中...' : '提出完了！ ✨'}
             </Button>
           </motion.div>
         </form>
