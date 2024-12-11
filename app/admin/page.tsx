@@ -5,6 +5,7 @@ import { format } from 'date-fns'
 import { ja } from 'date-fns/locale'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import prisma from '@/lib/prisma'  // 追加
 
 type Report = {
   id: string
@@ -65,7 +66,6 @@ export default function AdminPage() {
             <div key={report.id}>
               <h2>{report.name}</h2>
               <p>{report.date}</p>
-              {/* 他のフィールドも表示 */}
             </div>
           ))}
         </div>
