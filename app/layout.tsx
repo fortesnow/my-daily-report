@@ -1,4 +1,3 @@
-import { Toaster } from 'react-hot-toast'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -7,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Daily Report',
-  description: 'Daily report submission form',
+  description: 'Daily report application',
 }
 
 export default function RootLayout({
@@ -17,10 +16,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className={inter.className}>
-        {children}
-        <Toaster />
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }
+
